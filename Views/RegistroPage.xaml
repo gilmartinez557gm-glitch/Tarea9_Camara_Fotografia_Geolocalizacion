@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Tarea9_Camara_Fotografia_Geolocalizacion.Views.RegistroPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:Tarea9_Camara_Fotografia_Geolocalizacion.ViewModels"
+    xmlns:models="clr-namespace:Tarea9_Camara_Fotografia_Geolocalizacion.Models"
+    x:DataType="viewmodels:RegistroViewModel"
+    Title="Registro de personas">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Border BackgroundColor="#35218F"
+                    Padding="18"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 15">    
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="REGISTRO DE PERSONAS"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"/>
+
+                    <Label Text="Sistema de información personal"
+                           FontSize="13"
+                           TextColor="#E0DDF5"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+            </Border>
+
+            <Label Text="DATOS PERSONALES"
+                   FontSize="17"
+                   FontAttributes="Bold"
+                   TextColor="#35218F"/>
+
+            <Entry Placeholder="Número de identidad (13 dígitos)"
+                   Keyboard="Numeric"
+                   MaxLength="13"
+                   Text="{Binding Identidad}"/>
+
+            <Entry Placeholder="Nombre completo"
+                   Text="{Binding Nombre}"/>
+
+            <Entry Placeholder="Edad"
+                   Keyboard="Numeric"
+                   Text="{Binding Edad}"/>
+
+            <Picker Title="Seleccione el sexo"
+                    ItemsSource="{Binding Sexos}"
+                    SelectedItem="{Binding Sexo}"/>
+
+            <Label Text="DATOS DE CONTACTO"
+                   FontSize="17"
+                   FontAttributes="Bold"
+                   TextColor="#35218F"/>
+
+            <Entry Placeholder="Correo electrónico"
+                   Keyboard="Email"
+                   Text="{Binding Correo}"/>
+
+            <Entry Placeholder="Teléfono"
+                   Keyboard="Telephone"
+                   Text="{Binding Telefono}"/>
+
+            <Entry Placeholder="Dirección"
+                   Text="{Binding Direccion}"/>
+
+            <Entry Placeholder="Ocupación"
+                   Text="{Binding Ocupacion}"/>
+
+            <Label Text="Fecha de registro"
+                   FontAttributes="Bold"/>
+
+            <DatePicker Date="{Binding FechaRegistro}"/>
+
+            <Label Text="FOTOGRAFÍA Y UBICACIÓN"
+                   FontSize="17"
+                   FontAttributes="Bold"
+                   TextColor="#35218F"/>
+
+            <Label Text="Fotografía"
+                   FontAttributes="Bold"/>
+
+            <Image Source="{Binding FotoImagen}"
+                   HeightRequest="180"
+                   WidthRequest="180"
+                   Aspect="AspectFill"
+                   HorizontalOptions="Center"/>
+
+            <Button Text="TOMAR FOTOGRAFÍA"
+                    Command="{Binding CapturarFotoCommand}"
+                    BackgroundColor="#2563EB"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="50"/>
+
+            <Button Text="SELECCIONAR DE GALERÍA"
+                    Command="{Binding SeleccionarFotoCommand}"
+                    BackgroundColor="#475569"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="50"/>
+
+            <Label Text="Ubicación GPS"
+                   FontAttributes="Bold"/>
+
+            <Label Text="{Binding UbicacionTexto}"/>
+
+            <Button Text="Obtener ubicación"
+                    Command="{Binding ObtenerUbicacionCommand}"/>
+
+            <Button Text="GUARDAR PERSONA"
+                    Command="{Binding GuardarCommand}"
+                    BackgroundColor="#35218F"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    CornerRadius="12"
+                    HeightRequest="55"/>
+
+            <Label Text="PERSONAS REGISTRADAS"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="#35218F"
+                   Margin="0,15,0,5"/>
+
+            <CollectionView ItemsSource="{Binding Personas}"
+                            EmptyView="No hay personas registradas.">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Persona">
+
+                        <Border Stroke="#CBD5E1"
+                                StrokeThickness="1"
+                                Padding="12"
+                                Margin="0,5">
+
+                            <VerticalStackLayout Spacing="6">
+                                <Image Source="{Binding FotoImagen}"
+                                       HeightRequest="100"
+                                       WidthRequest="100"
+                                       Aspect="AspectFill"
+                                       HorizontalOptions="Start"/>
+
+                                <Label Text="{Binding Nombre}"
+                                       FontAttributes="Bold"
+                                       FontSize="18"/>
+
+                                <Label Text="{Binding Identidad}"/>
+                                <Label Text="{Binding Telefono}"/>
+                                <Label Text="{Binding Ocupacion}"/>
+
+                                <Button Text="Ver ubicación en mapa"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirMapaCommand}"
+                                        CommandParameter="{Binding .}"/>
+
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
